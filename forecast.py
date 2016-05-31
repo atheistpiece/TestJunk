@@ -2,13 +2,14 @@ import json
 import requests
 from weather import Weather
 
+passwords = {}
 filename = "keys.txt"
 with open(filename, 'r') as f:
-	stuff = f.read().splitlines()
+	for line in f:
+		(key,val) = line.split('=')
+		passwords[key] = val.rstrip()
 
-stuff =  stuff[0].split('=')
-
-apikey = stuff[1] 
+apikey = str(passwords['wunderground'])
 city = requests.get('http://api.wunderground.com/api/' + apikey + '/conditions/q/CA/Santa_Ana.json')
 
 
