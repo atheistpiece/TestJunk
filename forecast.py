@@ -10,8 +10,10 @@ with open(filename, 'r') as f:
 		passwords[key] = val.rstrip()
 
 apikey = str(passwords['wunderground'])
-city = requests.get('http://api.wunderground.com/api/' + apikey + '/conditions/q/CA/Santa_Ana.json')
+conditions = requests.get('http://api.wunderground.com/api/' + apikey + '/conditions/q/CA/Santa_Ana.json')
+forecast = requests.get('http://api.wunderground.com/api/' + apikey + '/forecast/q/CA/Santa_Ana.json')
 
+r = Weather(conditions.json(), forecast.json())
 
-r = Weather(city.json()['current_observation'])
-print(r.get_temp())
+new = r.get_forecast()
+
